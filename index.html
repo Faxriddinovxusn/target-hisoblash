@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Marketing Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      width: 400px;
+      margin: 50px auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      border: none;
+      border-radius: 8px;
+      background: #007BFF;
+      color: #fff;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .form {
+      display: none;
+      margin-top: 20px;
+    }
+    input {
+      width: 95%;
+      padding: 8px;
+      margin: 5px 0;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    .result {
+      margin-top: 10px;
+      padding: 10px;
+      background: #e9f5e9;
+      border-radius: 6px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Marketing Calculator</h2>
+    <button onclick="showForm('budget')">Kunlik budjet</button>
+    <button onclick="showForm('ctr')">CTR hisoblash</button>
+    <button onclick="showForm('cpa')">CPA hisoblash</button>
+    <button onclick="showForm('profit')">Foyda va marja</button>
+    <button onclick="showForm('kpi')">Reja bajarilishi (KPI)</button>
+
+    <div id="forms">
+      <!-- Budget -->
+      <div class="form" id="budget">
+        <h3>Kunlik budjet</h3>
+        <input type="number" id="budget-total" placeholder="Umumiy budjet">
+        <input type="number" id="budget-days" placeholder="Kunlar soni">
+        <button onclick="calcBudget()">Hisoblash</button>
+        <div class="result" id="budget-result"></div>
+      </div>
+
+      <!-- CTR -->
+      <div class="form" id="ctr">
+        <h3>CTR (Click-Through Rate)</h3>
+        <input type="number" id="ctr-clicks" placeholder="Kliklar">
+        <input type="number" id="ctr-impressions" placeholder="Ko‘rishlar">
+        <button onclick="calcCTR()">Hisoblash</button>
+        <div class="result" id="ctr-result"></div>
+      </div>
+
+      <!-- CPA -->
+      <div class="form" id="cpa">
+        <h3>CPA (Cost Per Action)</h3>
+        <input type="number" id="cpa-cost" placeholder="Umumiy xarajat">
+        <input type="number" id="cpa-actions" placeholder="Harakatlar soni">
+        <button onclick="calcCPA()">Hisoblash</button>
+        <div class="result" id="cpa-result"></div>
+      </div>
+
+      <!-- Profit -->
+      <div class="form" id="profit">
+        <h3>Foyda va marja</h3>
+        <input type="number" id="profit-revenue" placeholder="Daromad">
+        <input type="number" id="profit-cost" placeholder="Xarajat">
+        <button onclick="calcProfit()">Hisoblash</button>
+        <div class="result" id="profit-result"></div>
+      </div>
+
+      <!-- KPI -->
+      <div class="form" id="kpi">
+        <h3>Reja bajarilishi (KPI)</h3>
+        <input type="number" id="kpi-done" placeholder="bajarilgan ish soni ">
+        <input type="number" id="kpi-plan" placeholder="Reja">
+        <button onclick="calcKPI()">Hisoblash</button>
+        <div class="result" id="kpi-result"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showForm(id) {
+      document.querySelectorAll('.form').forEach(f => f.style.display = "none");
+      document.getElementById(id).style.display = "block";
+    }
+
+    function calcBudget() {
+      let total = parseFloat(document.getElementById("budget-total").value);
+      let days = parseInt(document.getElementById("budget-days").value);
+      if (total && days) {
+        document.getElementById("budget-result").innerText = "Kunlik budjet: " + (total / days).toFixed(2);
+      }
+    }
+
+
+    function calcCTR() {
+      let clicks = parseFloat(document.getElementById("ctr-clicks").value);
+      let imp = parseFloat(document.getElementById("ctr-impressions").value);
+      if (clicks && imp) {
+        document.getElementById("ctr-result").innerText = "CTR: " + ((clicks / imp) * 100).toFixed(2) + "%";
+      }
+    }
+
+    function calcCPA() {
+      let cost = parseFloat(document.getElementById("cpa-cost").value);
+      let actions = parseFloat(document.getElementById("cpa-actions").value);
+      if (cost && actions) {
+        document.getElementById("cpa-result").innerText = "CPA: " + (cost / actions).toFixed(2);
+      }
+    }
+
+    function calcProfit() {
+      let revenue = parseFloat(document.getElementById("profit-revenue").value);
+      let cost = parseFloat(document.getElementById("profit-cost").value);
+      if (revenue && cost) {
+        let profit = revenue - cost;
+        let margin = (profit / revenue) * 100;
+        document.getElementById("profit-result").innerText = "Foyda: " + profit.toFixed(2) + ", Marja: " + margin.toFixed(2) + "%";
+      }
+    }
+
+    function calcKPI() {
+      let done = parseFloat(document.getElementById("kpi-done").value);
+      let plan = parseFloat(document.getElementById("kpi-plan").value);
+      if (done && plan) {
+        document.getElementById("kpi-result").innerText = "KPI bajarilishi: " + ((done / plan) * 100).toFixed(2) + "%";
+      }
+    }
+  </script>
+</body>
+</html>
